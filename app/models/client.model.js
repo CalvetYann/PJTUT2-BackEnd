@@ -1,6 +1,6 @@
 const {DataTypes} = require("sequelize");
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
     const Client = sequelize.define("client", {
         name: {
             type: DataTypes.STRING
@@ -16,7 +16,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         createdAt: {
             type: DataTypes.DATE
-        },
+        }
     });
+
+
     return Client;
-}
+};
+

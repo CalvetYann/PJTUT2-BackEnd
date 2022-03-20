@@ -1,22 +1,26 @@
 const {DataTypes} = require("sequelize");
 
-module.exports = (sequelize, Sequelize) => {
-    const Case = sequelize.define("client", {
-        name: {
+module.exports = (sequelize) => {
+    const Case = sequelize.define("cases", {
+        ref: {
             type: DataTypes.STRING
         },
-        firstname: {
+        description: {
             type: DataTypes.STRING
         },
-        address: {
-            type: DataTypes.STRING
-        },
-        birthdate: {
-            type: DataTypes.STRING
-        },
-        createdAt: {
+        created_at: {
             type: DataTypes.DATE
         },
+        state: {
+            type: DataTypes.BOOLEAN
+        },
+        closed_at: {
+            type: DataTypes.DATE,
+            allowNull: true
+        }
     });
+
+
     return Case;
-}
+};
+
