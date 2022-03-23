@@ -1,27 +1,27 @@
 const db = require("../models");
-const Client = db.clients;
+const Case = db.cases;
 const Op = db.Sequelize.Op;
 
-//Create a Client
+//Create a new lawyer case
 exports.create = (req, res) => {
 
-    if (!req.body.name) {
+    if (!req.body.ref) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
         return;
     }
 
-    // Create a Client
-    const client = {
-        name: req.body.name,
-        firstname: req.body.firstname,
-        address: req.body.address,
-        birthdate: req.body.birthdate,
+    // Create a LawyerCase
+    const lawyerCase = {
+        ref: req.body.ref,
+        description: req.body.description,
+        state: req.body.state,
+        closed_at: req.body.closed_at,
     };
 
     // Save Tutorial in the database
-    Client.create(client)
+    Case.create(lawyerCase)
         .then(data => {
             res.send(data);
         })
@@ -33,9 +33,9 @@ exports.create = (req, res) => {
         });
 };
 
-//Get all Client
+//Get all lawyer case
 exports.findAll = (req, res) => {
-    Client.findAll()
+    Case.findAll()
         .then(data => {
             res.send(data);
         })
@@ -47,10 +47,10 @@ exports.findAll = (req, res) => {
         });
 };
 
-//Find on Client by ID
+//Find on lawyer case by ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    Client.findByPk(id)
+    Case.findByPk(id)
         .then(data => {
             res.send(data);
         })
@@ -61,53 +61,52 @@ exports.findOne = (req, res) => {
         });
 };
 
-//Update a Client by ID
+//Update a lawyer case by ID
 exports.update = (req, res) => {
     const id = req.params.id;
-    Client.update(req.body, {
+    Case.update(req.body, {
         where: { id: id }
     })
         .then(num => {
             if (num === 1) {
                 res.send({
-                    message: "Client was updated successfully."
+                    message: "Lawyer Case was updated successfully."
                 });
             } else {
                 res.send({
-                    message: `Cannot update Client with id=${id}. Maybe Client was not found or req.body is empty!`
+                    message: `Cannot update Lawyer Case with id=${id}. Maybe Lawyer Case was not found or req.body is empty!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Client with id=" + id
+                message: "Error updating Lawyer case with id=" + id
             });
         });
 };
 
-//Delete a Client by ID
+//Delete a lawyer case by ID
 exports.delete = (req, res) => {
     const id = req.params.id;
-    Client.destroy({
+    Case.destroy({
         where: { id: id }
     })
         .then(num => {
             if (num === 1) {
                 res.send({
-                    message: "Client was deleted successfully!"
+                    message: "Lawyer case was deleted successfully!"
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Client with id=${id}. Maybe Client was not found!`
+                    message: `Cannot delete Lawyer case with id=${id}. Maybe Lawyer case was not found!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Client with id=" + id
+                message: "Could not delete Lawyer case with id=" + id
             });
         });
 };
-
 
 
