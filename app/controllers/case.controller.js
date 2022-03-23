@@ -2,59 +2,111 @@ const db = require("../models");
 const Case = db.cases;
 const Op = db.Sequelize.Op;
 
+//Create a new lawyer case
+exports.create = (req, res) => {
 
-exports.createCase = (lawyerCase) => {
-    return Case.create({
-        ref: lawyerCase.ref,
-        description: lawyerCase.description,
-        created_at: lawyerCase.created_at,
-        state: lawyerCase.state,
-        closed_at: lawyerCase.closed_at,
+    if (!req.body.ref) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
+
+    // Create a LawyerCase
+    const lawyerCase = {
+        ref: req.body.ref,
+        description: req.body.description,
+        state: req.body.state,
+        closed_at: req.body.closed_at,
+    };
+
+    // Save Tutorial in the database
+    Case.create(lawyerCase)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Lawyercase."
+            });
+        });
+};
+
+//Get all lawyer case
+exports.findAll = (req, res) => {
+    Case.findAll()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving Clients."
+            });
+        });
+};
+
+//Find on lawyer case by ID
+exports.findOne = (req, res) => {
+    const id = req.params.id;
+    Case.findByPk(id)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Client with id=" + id
+            });
+        });
+};
+
+//Update a lawyer case by ID
+exports.update = (req, res) => {
+    const id = req.params.id;
+    Case.update(req.body, {
+        where: { id: id }
     })
-        .then((lawyerCase) => {
-            console.log(">> Created new Lawyer Case: " + JSON.stringify(lawyerCase, null, 4));
-            return lawyerCase;
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Lawyer Case was updated successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Lawyer Case with id=${id}. Maybe Lawyer Case was not found or req.body is empty!`
+                });
+            }
         })
-        .catch((err) => {
-            console.log(">> Error while creating tutorial: ", err);
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Tutorial with id=" + id
+            });
         });
 };
 
-//Get the Case for a given Id
-
-exports.findAll = () => {
-    return Case.findAll({
-    }).then((lawyercases) => {
-        return lawyercases;
-    });
+//Delete a lawyer case by ID
+exports.delete = (req, res) => {
+    const id = req.params.id;
+    Case.destroy({
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Lawyer case was deleted successfully!"
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete Lawyer case with id=${id}. Maybe Lawyer case was not found!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Lawyer case with id=" + id
+            });
+        });
 };
 
-exports.findCaseClientsById = (caseId) => {
-    return Case.findByPk(caseId, { include: ["clients"] })
-        .then((lawyercase) => {
-            return lawyercase;
-        })
-        .catch((err) => {
-            console.log(">> Error while finding tutorial: ", err);
-        });
-}
 
-exports.findCaseEventsById = (caseId) => {
-    return Case.findByPk(caseId, { include: ["events"] })
-        .then((lawyercase) => {
-            return lawyercase;
-        })
-        .catch((err) => {
-            console.log(">> Error while finding tutorial: ", err);
-        });
-}
-
-exports.findCaseById = (caseId) => {
-    return Case.findByPk(caseId, { include: ["clients", "events"],  })
-        .then((lawyercase) => {
-            return lawyercase;
-        })
-        .catch((err) => {
-            console.log(">> Error while finding tutorial: ", err);
-        });
-}

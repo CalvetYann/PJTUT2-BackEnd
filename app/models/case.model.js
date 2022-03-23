@@ -8,9 +8,6 @@ module.exports = (sequelize) => {
         description: {
             type: DataTypes.STRING
         },
-        created_at: {
-            type: DataTypes.DATE
-        },
         state: {
             type: DataTypes.BOOLEAN
         },

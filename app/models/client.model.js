@@ -3,19 +3,19 @@ const {DataTypes} = require("sequelize");
 module.exports = (sequelize) => {
     const Client = sequelize.define("client", {
         name: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
         firstname: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
         address: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
         birthdate: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
         createdAt: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
         }
     });
 

@@ -21,13 +21,20 @@ db.clients = require("./client.model")(sequelize,Sequelize);
 db.events = require("./event.model")(sequelize,Sequelize);
 
 db.clients.belongsTo(db.cases,{
-    foreignKey: "caseId",
-    as:"case"
+    foreignKey: {
+        name: "caseId",
+        allowNull: true
+    },
+    as:"case",
+
 });
 
 db.events.belongsTo(db.cases, {
-    foreignKey: "caseId",
-    as: "case"
+    foreignKey: {
+        name: "caseId",
+        allowNull: true
+    },
+    as: "case",
 })
 
 db.cases.hasMany(db.clients, {as:"clients"});

@@ -8,18 +8,16 @@ const eventController = require("./app/controllers/event.controller");
 
 const run = async () => {
 
-    const case1 = await caseController.createCase({
+   /* const case1 = await caseController.createFixture({
         ref: "3123124",
         description: "Lorem ipsum de test pour case",
-        created_at: Date.now(),
         state: 1,
         closed_at: "2020-04-14T09:49:14.021Z",
     });
 
-    const case2 = await caseController.createCase({
+    const case2 = await caseController.createFixture({
         ref: "3123424",
         description: "Lorem ipsum de test pour case2",
-        created_at: Date.now(),
         state: 1,
         closed_at: "2020-04-14T09:49:14.021Z",
     });
@@ -58,12 +56,10 @@ const run = async () => {
         createdAt:Date.now(),
     })
 
-    const AllCases = await caseController.findAll();
+    /!*const AllCases = await caseController.findAll();*!/
     const clientsCase1 = await caseController.findCaseClientsById(case1.id);
-    const eventsCase1 = await caseController.findCaseEventsById(case1.id);
     const case1Infos = await caseController.findCaseById(case1.id);
 
-    console.log(case1Infos);
 
     console.log(
         ">> Liste des clients de l'affaire n°" + clientsCase1.id,
@@ -75,7 +71,7 @@ const run = async () => {
         JSON.stringify(eventsCase1, null, 2)
     );
 
-    console.log()
+    console.log()*/
 
 };
 
@@ -100,6 +96,10 @@ db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
     run();
 });
+
+//Routes
+require("./app/routes/client.routes")(app);
+require("./app/routes/case.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
