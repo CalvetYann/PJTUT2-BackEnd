@@ -1,5 +1,3 @@
-const caseController = require("../controllers/case.controller");
-
 module.exports = app => {
     const caseController = require("../controllers/case.controller.js");
     let router = require("express").Router();
@@ -14,8 +12,6 @@ module.exports = app => {
     router.put("/:id", caseController.update);
     // Delete a Lawyer case with id
     router.delete("/:id", caseController.delete);
-
-
 
     app.use('/api/lawyercases', router);
 };

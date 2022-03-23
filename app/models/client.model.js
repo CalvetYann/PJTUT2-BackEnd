@@ -14,9 +14,6 @@ module.exports = (sequelize) => {
         birthdate: {
             type: DataTypes.STRING,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-        }
     });
 
 

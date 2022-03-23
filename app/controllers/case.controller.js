@@ -68,7 +68,7 @@ exports.update = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
+            if (num === 1) {
                 res.send({
                     message: "Lawyer Case was updated successfully."
                 });
@@ -80,7 +80,7 @@ exports.update = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Tutorial with id=" + id
+                message: "Error updating Lawyer case with id=" + id
             });
         });
 };
@@ -92,7 +92,7 @@ exports.delete = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
+            if (num === 1) {
                 res.send({
                     message: "Lawyer case was deleted successfully!"
                 });

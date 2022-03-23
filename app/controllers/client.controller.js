@@ -2,49 +2,40 @@ const db = require("../models");
 const Client = db.clients;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Client
-exports.createClient = (caseId, client) => {
+//Create a Client
+exports.create = (req, res) => {
 
-    return Client.create({
-        name: client.name,
-        firstname: client.firstname,
-        address:client.address,
-        birthdate:client.birthdate,
-        createdAt:client.createdAt,
-        CaseId: client.caseId
-    })
-        .then((client) => {
-            console.log("Test new client" + JSON.stringify(client));
-            console.log(">> Created  New client: " + JSON.stringify(client, null, 4));
-            return client;
+    if (!req.body.name) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
+
+    // Create a Client
+    const client = {
+        name: req.body.name,
+        firstname: req.body.firstname,
+        address: req.body.address,
+        birthdate: req.body.birthdate,
+    };
+
+    // Save Tutorial in the database
+    Client.create(client)
+        .then(data => {
+            res.send(data);
         })
-        .catch((error) => {
-            console.log("Error during creation of a New Client : ", error);
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Lawyercase."
+            });
         });
 };
-/*Get the client for a given client id*/
-exports.findClientById = (id) => {
-    return Client.findByPk(id, { include: ["caseId"] })
-        .then((client) => {
-            return client;
-        })
-        .catch((err) => {
-            console.log(">> Error while finding Client: ", err);
-        });
-};
-/*Retrieve all clients from a specific case*/
-exports.findAllClientsFromCase = (caseId) => {
-    return Client.findAll({
-        where: {caseId: caseId}
-    }).then(clients => {
-        console.log(clients)
-    })
-}
-// Retrieve all Clients from the database.
+
+//Get all Client
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    let condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-    Client.findAll({ where: condition })
+    Client.findAll()
         .then(data => {
             res.send(data);
         })
@@ -55,7 +46,8 @@ exports.findAll = (req, res) => {
             });
         });
 };
-// Find a single Client with an id
+
+//Find on Client by ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
     Client.findByPk(id)
@@ -68,14 +60,15 @@ exports.findOne = (req, res) => {
             });
         });
 };
-// Update a Client by the id in the request
+
+//Update a Client by ID
 exports.update = (req, res) => {
     const id = req.params.id;
     Client.update(req.body, {
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
+            if (num === 1) {
                 res.send({
                     message: "Client was updated successfully."
                 });
@@ -91,14 +84,15 @@ exports.update = (req, res) => {
             });
         });
 };
-// Delete a Client with the specified id in the request
+
+//Delete a Client by ID
 exports.delete = (req, res) => {
     const id = req.params.id;
     Client.destroy({
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
+            if (num === 1) {
                 res.send({
                     message: "Client was deleted successfully!"
                 });
@@ -114,19 +108,6 @@ exports.delete = (req, res) => {
             });
         });
 };
-// Delete all Clients from the database.
-exports.deleteAll = (req, res) => {
-    Client.destroy({
-        where: {},
-        truncate: false
-    })
-        .then(nums => {
-            res.send({ message: `${nums} Client were deleted successfully!` });
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while removing all clients."
-            });
-        });
-};
+
+
+
