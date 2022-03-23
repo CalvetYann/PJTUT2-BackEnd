@@ -100,6 +100,7 @@ db.sequelize.sync({ force: true }).then(() => {
 //Routes
 require("./app/routes/client.routes")(app);
 require("./app/routes/case.routes")(app);
+require("./app/routes/event.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
