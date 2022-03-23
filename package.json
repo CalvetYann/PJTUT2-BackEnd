@@ -1,0 +1,33 @@
+{
+  "name": "pjtut2-backend",
+  "version": "1.0.0",
+  "description": "Node.js API with Express, Sequelize & MySQL.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CalvetYann/PJTUT2-BackEnd.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sequelize",
+    "mysql",
+    "api"
+  ],
+  "author": "Yann, Allan, Abdoul, Selim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CalvetYann/PJTUT2-BackEnd/issues"
+  },
+  "homepage": "https://github.com/CalvetYann/PJTUT2-BackEnd#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.17.0",
+    "sequelize-fixtures": "^1.2.0"
+  }
+}
