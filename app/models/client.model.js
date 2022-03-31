@@ -12,10 +12,9 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
         },
         birthdate: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATEONLY,
         },
     });
-
 
     return Client;
 };

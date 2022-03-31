@@ -59,10 +59,26 @@ exports.findOne = (req, res) => {
     Client.findByPk(id)
         .then(data => {
             res.send(data);
+            res.send("Tu es bien dans la FBN" + req.params)
         })
         .catch(err => {
             res.status(500).send({
                 message: "Error retrieving Client with id=" + id
+            });
+        });
+};
+
+//Find on Client by ID
+exports.findByName = (req, res) => {
+    const name = req.params.name;
+
+    Client.find( {where: {name: name}})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Client with name=" + name
             });
         });
 };
@@ -74,7 +90,7 @@ exports.update = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num === 1) {
+            if (num == 1) {
                 res.send({
                     message: "Client was updated successfully."
                 });

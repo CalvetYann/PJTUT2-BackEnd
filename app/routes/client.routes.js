@@ -1,3 +1,4 @@
+const client = require("../controllers/client.controller");
 module.exports = app => {
     const client = require("../controllers/client.controller");
     let router = require("express").Router();
@@ -8,6 +9,8 @@ module.exports = app => {
     router.get("/", client.findAll);
     // Retrieve a single Client with id
     router.get("/:id", client.findOne);
+    // Retrieve a single Client with name
+    router.get("/:name", client.findByName);
     // Update a Client with id
     router.put("/:id", client.update);
     // Delete a Client with id
