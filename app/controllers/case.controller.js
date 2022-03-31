@@ -1,3 +1,4 @@
+const { clients } = require("../models");
 const db = require("../models");
 const Case = db.cases;
 const Op = db.Sequelize.Op;
@@ -35,7 +36,12 @@ exports.create = (req, res) => {
 
 //Get all lawyer case
 exports.findAll = (req, res) => {
-    Case.findAll()
+    Case.findAll({
+        include: [{
+            model: clients,
+            as: "clients"
+        }]
+    })
         .then(data => {
             res.send(data);
         })
@@ -108,5 +114,3 @@ exports.delete = (req, res) => {
             });
         });
 };
-
-

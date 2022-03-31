@@ -1,3 +1,4 @@
+const { cases } = require("../models");
 const db = require("../models");
 const Client = db.clients;
 const Op = db.Sequelize.Op;
@@ -28,14 +29,19 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the Lawyercase."
+                    err.message || "Some error occurred while creating the Client."
             });
         });
 };
 
-//Get all Client
+//Get all clients
 exports.findAll = (req, res) => {
-    Client.findAll()
+    Client.findAll({
+        include: [{
+            model: cases,
+            as: "cases"
+        }]
+    })
         .then(data => {
             res.send(data);
         })
