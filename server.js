@@ -79,7 +79,13 @@ const run = async () => {
 const CaseController = require("./app/controllers/case.controller");*/
 
 let corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://localhost:8081",
+    methods:[
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+    ]
 }
 
 app.use(cors(corsOptions));
