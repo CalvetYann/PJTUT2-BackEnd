@@ -120,3 +120,35 @@ exports.delete = (req, res) => {
             });
         });
 };
+
+exports.addClient = (req, res) => {
+    const id = req.params.id;
+    const clientId = req.params.clientId;
+    Case.findOne({
+        where: { id: id }
+    })
+        .then(lawyerCase => {
+            if (lawyerCase) {
+                lawyerCase.addClient(clientId)
+                    .then(() => {
+                        res.send({
+                            message: "Client was added to lawyer case successfully."
+                        });
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message: "Error adding client to lawyer case."
+                        });
+                    });
+            } else {
+                res.send({
+                    message: "Lawyer case not found with id " + id
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving lawyer case with id=" + id
+            });
+        });
+}
