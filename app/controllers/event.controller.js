@@ -1,3 +1,4 @@
+const { cases } = require("../models");
 const db = require("../models");
 const Event = db.events;
 const Op = db.Sequelize.Op;
@@ -49,7 +50,9 @@ exports.findAll = (req, res) => {
 //Find one Event by Id
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    Event.findByPk(id)
+    Event.findOne({        
+        where: { id: id }
+    })
         .then(data => {
             res.send(data);
         })

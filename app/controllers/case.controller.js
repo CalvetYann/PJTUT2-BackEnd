@@ -56,7 +56,13 @@ exports.findAll = (req, res) => {
 //Find on lawyer case by ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    Case.findByPk(id)
+    Case.findOne({
+        include: [{
+            model: clients,
+            as: "clients"
+        }],
+        where: { id: id },       
+    })
         .then(data => {
             res.send(data);
         })

@@ -16,8 +16,7 @@ module.exports = (sequelize) => {
             allowNull: true
         }
     });
-
-
+    
     return Case;
 };
 
