@@ -67,6 +67,21 @@ exports.findOne = (req, res) => {
         });
 };
 
+//Find on Client by ID
+exports.findByName = (req, res) => {
+    const name = req.params.name;
+
+    Client.find( {where: {name: name}})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Client with name=" + name
+            });
+        });
+};
+
 //Update a Client by ID
 exports.update = (req, res) => {
     const id = req.params.id;
@@ -74,7 +89,7 @@ exports.update = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num === 1) {
+            if (num == 1) {
                 res.send({
                     message: "Client was updated successfully."
                 });
