@@ -59,7 +59,6 @@ exports.findOne = (req, res) => {
     Client.findByPk(id)
         .then(data => {
             res.send(data);
-            res.send("Tu es bien dans la FBN" + req.params)
         })
         .catch(err => {
             res.status(500).send({
