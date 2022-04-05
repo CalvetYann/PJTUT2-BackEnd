@@ -12,6 +12,10 @@ module.exports = app => {
     router.put("/:id", caseController.update);
     // Delete a Lawyer case with id
     router.delete("/:id", caseController.delete);
+    //Add client to a Lawyercase
+    router.put("/addtolc/:id/:clientId", caseController.addClientToLc)
+    //Add event to lawyer case
+    router.put("/events/:id", caseController.addEvent)
 
     app.use('/api/lawyercases', router);
 };

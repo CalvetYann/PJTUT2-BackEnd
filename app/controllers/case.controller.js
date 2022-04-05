@@ -1,6 +1,8 @@
 const { clients } = require("../models");
 const db = require("../models");
 const Case = db.cases;
+const Client = db.clients;
+const Event = db.events;
 const Op = db.Sequelize.Op;
 
 //Create a new lawyer case
@@ -56,7 +58,18 @@ exports.findAll = (req, res) => {
 //Find on lawyer case by ID
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    Case.findByPk(id)
+    Case.findOne({
+        where: { id: id },
+        include: [{
+            model: clients,
+            as: "clients"
+        },
+        {
+            model: Event,
+            as: "events"
+        }]
+
+    })
         .then(data => {
             res.send(data);
         })
@@ -114,3 +127,55 @@ exports.delete = (req, res) => {
             });
         });
 };
+
+exports.addClientToLc = (req, res) => {
+    const lawyercaseId = req.params.id;
+    const clientId = req.params.clientId;
+    return Case.findByPk(lawyercaseId)
+       .then((lawyercase) => {
+           if(!lawyercase){
+               res.send("Lawyercase Not Found!");
+               return null
+           }
+
+           return Client.findByPk(clientId)
+               .then((client) => {
+                   if(!client){
+                       return null
+                   }
+                   lawyercase.addClient(client);
+                   res.send(`Client id : ${client.id} added to Lawyercase ${lawyercase.id}`)
+               })
+               .catch((err) => {
+                   res.send(">> Error while adding client to lawyercase:" , err)
+               })
+       })
+}
+
+//Create event and add to case
+exports.addEvent = (req, res) => {
+    const id = req.params.id;
+    const event = req.body;
+    console.log(event)
+    Case.findByPk(id)
+        .then(lawyercase => {
+            if(!lawyercase){
+                res.send("Lawyercase Not Found!");
+                return null
+            }
+            return Event.create(event)
+                .then(event => {
+                    if(!event){
+                        return null
+                    }
+                    lawyercase.addEvent(event);
+                    res.send(`Event added to Lawyercase ${lawyercase.id}`)
+                })
+                .catch(err => {
+                    res.send(">> Error while adding event to lawyercase:" , err)
+                })
+        })
+        .catch(err => {
+            res.send(">> Error while finding lawyercase:" , err)
+        })
+}

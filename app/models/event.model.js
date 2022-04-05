@@ -5,9 +5,6 @@ module.exports = (sequelize) => {
         description: {
             type: DataTypes.STRING
         },
-        date: {
-            type: DataTypes.DATE
-        },
         duration: {
             type: DataTypes.STRING
         }

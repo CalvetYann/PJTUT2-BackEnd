@@ -15,7 +15,6 @@ exports.create = (req, res) => {
     // Create an Event
     const event = {
         description: req.body.description,
-        date: req.body.date,
         duration: req.body.duration,
     };
 
