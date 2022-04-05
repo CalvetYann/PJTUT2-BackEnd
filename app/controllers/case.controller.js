@@ -1,6 +1,7 @@
-const { clients } = require("../models");
+const { clients, events } = require("../models");
 const db = require("../models");
 const Case = db.cases;
+const Client = db.clients;
 const Op = db.Sequelize.Op;
 
 //Create a new lawyer case
@@ -57,10 +58,16 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
     Case.findOne({
-        include: [{
+        include: [
+        {
             model: clients,
             as: "clients"
-        }],
+        },
+        {
+            model: events,
+            as: "events"
+        }
+    ],
         where: { id: id },       
     })
         .then(data => {
@@ -121,34 +128,50 @@ exports.delete = (req, res) => {
         });
 };
 
-exports.addClient = (req, res) => {
-    const id = req.params.id;
+exports.addClientToLc = (req, res) => {
+    const lawyercaseId = req.params.id;
     const clientId = req.params.clientId;
-    Case.findOne({
-        where: { id: id }
-    })
-        .then(lawyerCase => {
-            if (lawyerCase) {
-                lawyerCase.addClient(clientId)
-                    .then(() => {
-                        res.send({
-                            message: "Client was added to lawyer case successfully."
-                        });
-                    })
-                    .catch(err => {
-                        res.status(500).send({
-                            message: "Error adding client to lawyer case."
-                        });
-                    });
-            } else {
-                res.send({
-                    message: "Lawyer case not found with id " + id
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error retrieving lawyer case with id=" + id
-            });
-        });
+    return Case.findByPk(lawyercaseId)
+       .then((lawyercase) => {
+           if(!lawyercase){
+               res.send("Lawyercase Not Found!");
+               return null
+           }
+
+           return Client.findByPk(clientId)
+               .then((client) => {
+                   if(!client){
+                       return null
+                   }
+                   lawyercase.addClient(client);
+                   res.send(`Client id : ${client.id} added to Lawyercase ${lawyercase.id}`)
+               })
+               .catch((err) => {
+                   res.send(">> Error while adding client to lawyercase:" , err)
+               })
+       })
+}
+
+exports.removeClientFromLc = (req, res) => {
+    const lawyercaseId = req.params.id;
+    const clientId = req.params.clientId;
+    return Case.findByPk(lawyercaseId)
+       .then((lawyercase) => {
+           if(!lawyercase){
+               res.send("Lawyercase Not Found!");
+               return null
+           }
+
+           return Client.findByPk(clientId)
+               .then((client) => {
+                   if(!client){
+                       return null
+                   }
+                   lawyercase.removeClient(client);
+                   res.send(`Client id : ${client.id} removed from Lawyercase ${lawyercase.id}`)
+               })
+               .catch((err) => {
+                   res.send(">> Error while removing client from lawyercase:" , err)
+               })
+       })
 }

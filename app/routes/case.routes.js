@@ -12,8 +12,11 @@ module.exports = app => {
     router.put("/:id", caseController.update);
     // Delete a Lawyer case with id
     router.delete("/:id", caseController.delete);
-    // Add a client to a lawyer case
-    router.put("/:id/addClient/:clientId", caseController.addClient);
+
+    router.put("/addtolc/:id/:clientId", caseController.addClientToLc)
+
+    router.delete("/removefromlc/:id/:clientId", caseController.removeClientFromLc)
+    
 
     app.use('/api/lawyercases', router);
 };
