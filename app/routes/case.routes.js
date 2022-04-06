@@ -18,6 +18,8 @@ module.exports = app => {
     router.put("/events/:id", caseController.addEvent)
     //update lawyercase status
     router.put("/status/:id", caseController.updateStatus)
+    //Delete client from a Lawyercase
+    router.delete("/removefromlc/:id/:clientId", caseController.removeClientFromLc)
 
     app.use('/api/lawyercases', router);
 };

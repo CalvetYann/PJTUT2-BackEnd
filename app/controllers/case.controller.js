@@ -203,3 +203,27 @@ exports.addEvent = (req, res) => {
         })
 }
 
+exports.removeClientFromLc = (req, res) => {
+    const lawyercaseId = req.params.id;
+    const clientId = req.params.clientId;
+    return Case.findByPk(lawyercaseId)
+        .then((lawyercase) => {
+            if(!lawyercase){
+                res.send("Lawyercase Not Found!");
+                return null
+            }
+
+            return Client.findByPk(clientId)
+                .then((client) => {
+                    if(!client){
+                        return null
+                    }
+                    lawyercase.removeClient(client);
+                    res.send(`Client id : ${client.id} removed from Lawyercase ${lawyercase.id}`)
+                })
+                .catch((err) => {
+                    res.send(">> Error while removing client from lawyercase:" , err)
+                })
+        })
+}
+
