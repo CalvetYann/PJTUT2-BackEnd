@@ -16,6 +16,8 @@ module.exports = app => {
     router.put("/addtolc/:id/:clientId", caseController.addClientToLc)
     //Add event to lawyer case
     router.put("/events/:id", caseController.addEvent)
+    //update lawyercase status
+    router.put("/status/:id", caseController.updateStatus)
 
     app.use('/api/lawyercases', router);
 };

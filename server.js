@@ -23,9 +23,9 @@ app.get("/", (req, res) => {
         res.json({ message: "Welcome to LawFirm Manager application." });
 });
 
-db.sequelize.sync({ force: true }).then(() => {
+/*db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
-});
+});*/
 
 //Routes
 require("./app/routes/client.routes")(app);

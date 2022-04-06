@@ -19,7 +19,6 @@ exports.create = (req, res) => {
     const lawyerCase = {
         ref: req.body.ref,
         description: req.body.description,
-        state: req.body.state,
         closed_at: req.body.closed_at,
     };
 
@@ -152,6 +151,30 @@ exports.addClientToLc = (req, res) => {
        })
 }
 
+//update lawyercase status
+exports.updateStatus = (req, res) => {
+    const id = req.params.id;
+    Case.update(req.body, {
+        where: { id: id }
+    })
+        .then(num => {
+            if (num === 1) {
+                res.send({
+                    message: "Lawyer Case was updated successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Lawyer Case with id=${id}. Maybe Lawyer Case was not found or req.body is empty!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Lawyer case with id=" + id
+            });
+        });
+};
+
 //Create event and add to case
 exports.addEvent = (req, res) => {
     const id = req.params.id;
@@ -179,3 +202,4 @@ exports.addEvent = (req, res) => {
             res.send(">> Error while finding lawyercase:" , err)
         })
 }
+

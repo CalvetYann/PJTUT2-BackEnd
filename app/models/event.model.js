@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING
         },
         duration: {
-            type: DataTypes.STRING
+            type: DataTypes.INTEGER
         }
     });
 

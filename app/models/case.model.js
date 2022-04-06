@@ -8,9 +8,6 @@ module.exports = (sequelize) => {
         description: {
             type: DataTypes.STRING
         },
-        state: {
-            type: DataTypes.BOOLEAN
-        },
         closed_at: {
             type: DataTypes.DATE,
             allowNull: true
