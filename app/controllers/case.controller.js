@@ -151,26 +151,19 @@ exports.addClientToLc = (req, res) => {
        })
 }
 
-//update lawyercase status
 exports.updateStatus = (req, res) => {
     const id = req.params.id;
     Case.update(req.body, {
         where: { id: id }
     })
-        .then(num => {
-            if (num === 1) {
-                res.send({
-                    message: "Lawyer Case was updated successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update Lawyer Case with id=${id}. Maybe Lawyer Case was not found or req.body is empty!`
-                });
-            }
+        .then(() => {
+            res.send({
+                message: "Status was updated successfully."
+            });
         })
-        .catch(err => {
+        .catch((e) => {
             res.status(500).send({
-                message: "Error updating Lawyer case with id=" + id
+                message: "Error updating Lawyer case with id=" + e
             });
         });
 };
