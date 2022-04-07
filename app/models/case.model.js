@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING
         },
         closed_at: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: true
         }
     });
