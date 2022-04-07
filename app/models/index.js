@@ -24,7 +24,7 @@ db.clients.belongsToMany(db.cases,{
         name: "clientId",
         allowNull: true
     },
-    as:"cases",
+    as:"lawyercases",
     through: "client_case"
 });
 
@@ -33,7 +33,7 @@ db.events.belongsTo(db.cases, {
         name: "caseId",
         allowNull: true
     },
-    as: "case",
+    as: "lawyercase",
 })
 
 db.cases.belongsToMany(db.clients,{
