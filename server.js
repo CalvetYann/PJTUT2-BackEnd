@@ -2,18 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const db = require("./app/models");
-const caseController = require("./app/controllers/case.controller");
-const clientController = require("./app/controllers/client.controller");
-const eventController = require("./app/controllers/event.controller");
 
-/*const ClientController = require("./app/controllers/client.controller");
-const CaseController = require("./app/controllers/case.controller");*/
-
-let corsOptions = {
+/*let corsOptions = {
     origin: "http://localhost",
-}
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+}*/
 
-app.use(cors(corsOptions));
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
