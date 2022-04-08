@@ -139,9 +139,6 @@ exports.addClientToLc = (req, res) => {
 
            return Client.findByPk(clientId)
                .then((client) => {
-                   if(!client){
-                       return null
-                   }
                    lawyercase.addClient(client);
                    res.send(`Client id : ${client.id} added to Lawyercase ${lawyercase.id}`)
                })

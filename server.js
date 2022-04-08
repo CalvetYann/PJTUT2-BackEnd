@@ -10,7 +10,7 @@ const eventController = require("./app/controllers/event.controller");
 const CaseController = require("./app/controllers/case.controller");*/
 
 let corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://localhost",
 }
 
 app.use(cors(corsOptions));
