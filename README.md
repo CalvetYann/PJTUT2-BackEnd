@@ -6,6 +6,7 @@ Repo BackEnd - ProjetTut Breuil Calvet Idlbi Zouache
 2. Pré-requis
 3. Installation
 4. Démarrage du server
+5. Détails
 
 
 ## Présentation 
@@ -34,7 +35,7 @@ Ce projet est la partie server qui permet de gérer les intéractions avec la ba
 
 La base de données est maintenant utilisable, et le jeu de données est en place ! 
 
-## Comment démarrer le projet 
+## Démarrage du server 
 
 * Dans votre terminal entrez la commande suivante : `node server.js`
 * Si le processur s'est déroulé avec succès vous aurez le message suivant : `Server is running on port 8080`.
